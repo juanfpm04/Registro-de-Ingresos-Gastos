@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Control de Gastos</title>
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:100,400,700" rel="stylesheet">
+</head>
+<body>
+  <header>
+    <h1>Registro de Ingresos/Gastos</h1>
+  </header>
+  <main id="app">
+    <form @submit.prevent="agregarTransaccion">
+      <input type="number" id="monto" placeholder="Ingrese su Monto" v-model="nuevaTransaccion.monto" required>
+      
+      <select id="tipo" name="tipo" v-model="nuevaTransaccion.tipo" required>
+          <option value="" disabled selected hidden>Ingrese un tipo</option>
+          <option value="ingreso">Ingreso</option>
+          <option value="gasto">Gasto</option>
+      </select>
+      
+      <input type="text" id="descripcion" placeholder="Descripción" v-model="nuevaTransaccion.descripcion" required>
+      
+      <input type="date" id="date" v-model="nuevaTransaccion.fecha" required>
+      
+      <button type="submit">Agregar</button>
+    </form>
+
+    <table id="tabla">
+      <thead>
+          <tr>
+              <th>Monto</th>
+              <th>Tipo</th>
+              <th>Descripción</th>
+              <th>Fecha</th>
+              <th>Acciones</th>
+          </tr>
+      </thead>
+      <tbody>
+          <tr v-for="(transaccion, index) in transacciones" :key="index">
+              <td>{{ transaccion.monto }}</td>
+              <td>{{ transaccion.tipo }}</td>
+              <td>{{ transaccion.descripcion }}</td>
+              <td>{{ transaccion.fecha }}</td>
+              <td>
+                  <button @click="eliminarTransaccion(index)" class="delete">Borrar</button>
+              </td>
+          </tr>
+      </tbody>
+    </table>
+
+    <section id="grafica">
+      <h2>Gráfica de Seguimiento</h2>
+      <canvas id="graficaGastos"></canvas>
+    </section>
+  </main>
+  <footer>
+    <p>&copy; 2024 </p>
+  </footer>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="app.js"></script>
+</body>
+
+
